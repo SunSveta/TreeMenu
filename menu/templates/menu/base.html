@@ -1,0 +1,44 @@
+{% load static %}
+{% load menu_tag %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PechkinPost</title>
+     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+     <style>
+	body{background-image:url('/static/fon.jpg');
+        background-attachment:fixed;background-repeat: no-repeat;
+        background-size: cover;}
+   </style>
+
+</head>
+
+<body>
+<div class="container">
+    {% block content %}
+{% draw_menu request.path as lst %}
+{% for item in lst %}
+    {{ item }}
+
+    <ul>
+        {% for first_line in item.child_item.all %}
+        <a href={{first_line.url}}>{{ first_line }}</a>
+
+        <ul>
+            {% for sec_line in first_line.child_item.all %}
+            <a href={{sec_line.url}}>{{ sec_line }}</a>
+            {% endfor %}
+        </ul>
+
+        {% endfor %}
+    </ul>
+
+{% endfor %}
+    {% endblock %}
+</div>
+</body>
+</html>
